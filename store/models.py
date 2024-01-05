@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.db.models.signals import post_save
 
 from django.contrib.auth.models import User
 
@@ -25,9 +25,8 @@ class Product(models.Model):
         return self.title
 
 class Basket(models.Model):
-    owner=models.ForeignKey(User,on_delete=models.CASCADE)
-    product=models.ForeignKey(Product,on_delete=models.CASCADE)
-    quantity=models.PositiveIntegerField(default=1)
+    owner=models.OneToOneField(User,on_delete=models.CASCADE,related_name="cart")
+  
     options=(
         ("in-cart","in-cart"),
         ("order-placed","order-placed"),
@@ -38,9 +37,23 @@ class Basket(models.Model):
     updated_at=models.DateTimeField(auto_now=True)
     is_active=models.BooleanField(default=True)
 
+class BasketItem(models.Model):
+    basket=models.ForeignKey(Basket,on_delete=models.CASCADE,related_name="cartitem") 
+    product=models.ForeignKey(Product,on_delete=models.CASCADE)
+    quantity=models.PositiveIntegerField(default=1)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    is_active=models.BooleanField(default=True)
 
 
 
+def create_basket(sender,created,instance,**kwargs):
+    if created:
+        Basket.objects.create(owner=instance)
+
+
+
+post_save.connect(create_basket,sender=User)
 
 
 
