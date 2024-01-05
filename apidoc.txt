@@ -1,0 +1,49 @@
+api for creating a new user
+=======================================
+url:http://127.0.0.1:8000/api/signup/
+method:post
+data:{username,email,password}
+
+authorization:nill
+
+
+
+api for fetching token
+==========================
+url:http://127.0.0.1:8000/api/token/
+
+method:post
+body:{username,password}
+authorization:nill
+
+api for fetching all products
+================================
+url:http://127.0.0.1:8000/api/products/
+method:get
+body:nill
+authorization:Token 
+
+
+api for fecting product detail
+===============================
+url:http://127.0.0.1:8000/api/products/{id}/
+method:get
+body:nill
+authorization:Token 
+
+
+api for adding product to basket
+================================
+url:http://127.0.0.1:8000/api/products/{id}/add_to_basket/
+method:post
+body:{qty:1}
+authorization:Token 
+
+
+api for listing basket items
+========================================
+url:http://127.0.0.1:8000/api/baskets/
+method:get
+body:nill
+authorization:Token 
+
