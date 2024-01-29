@@ -61,7 +61,7 @@ class BasketView(viewsets.ViewSet):
     permission_classes=[permissions.IsAuthenticated]
 
     def list(self,request,*args,**kwargs):
-        qs=request.user.cart
+        qs=request.user.cart #cart related name used in models
         serializer=BasketSerializer(qs)
         return Response(data=serializer.data)
 

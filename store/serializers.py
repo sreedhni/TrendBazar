@@ -24,6 +24,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class BasketItemSerializer(serializers.ModelSerializer):
     product=ProductSerializer(read_only=True)
+    total=serializers.IntegerField(read_only=True)
     class Meta:
         model=BasketItem
         fields="__all__"
@@ -32,6 +33,7 @@ class BasketItemSerializer(serializers.ModelSerializer):
 class BasketSerializer(serializers.ModelSerializer):
     owner=serializers.StringRelatedField()
     basket_item_count=serializers.CharField(read_only=True)
+    sub_total=serializers.CharField(read_only=True)
     
     class Meta:
         model=Basket
